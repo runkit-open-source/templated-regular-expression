@@ -1,0 +1,15 @@
+{
+  "name": "templated-regular-expression",
+  "version": "1.0.0-alpha.1",
+  "description": "",
+  "main": "templated-regular-expression.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Francisco Ryan Tolmask I",
+  "license": "MIT",
+  "dependencies": {
+    "@climb/partition": "1.0.0-alpha.3"
+  }
+}
