@@ -1,5 +1,5 @@
 const partition = require("@climb/partition");
-const template = /\$\{[a-zA-Z0-9]+\}/g;
+const template = /\$\{[^\}]+\}/g;
 const extract = name => name.substr(2, name.length - 3);
 const dedupe = array => Array.from(new Set(array));
 const variables = source => dedupe((source.match(template) || []).map(extract));
