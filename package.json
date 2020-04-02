@@ -1,13 +1,13 @@
 {
   "name": "templated-regular-expression",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "",
   "main": "templated-regular-expression.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Francisco Ryan Tolmask I",
+  "author": "Francisco Ryan Tolmasky I",
   "license": "MIT",
   "dependencies": {
     "@climb/partition": "1.0.0-alpha.3"
