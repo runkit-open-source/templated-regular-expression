@@ -1,10 +1,21 @@
 const partition = require("@climb/partition");
-const template = /\$\{[^\}]+\}/g;
-const extract = name => name.substr(2, name.length - 3);
+
+const template = /\$\{(?:\<(?<captured>[^\>]+)\>|(?<uncaptured>[^\}]+))\}/g;
+const extract =
+    ({ captured, uncaptured }) => [!!captured, captured || uncaptured];
+const matchOver = (regexp, string, result = []) =>
+    (string.replace(regexp, (...args) => (result.push(args[5]))), result);
+
 const dedupe = array => Array.from(new Set(array));
-const variables = source => dedupe((source.match(template) || []).map(extract));
+const variables = source =>
+    dedupe(matchOver(template, source).map(match => extract(match)[1]));
+
 const insert = (source, values) => new RegExp(
-    source.replace(template, match => `(?:${values[extract(match)].source})`));
+    source.replace(template, (...match) =>
+        ((captured, name) =>
+            `(?${captured ? `<${name}>` : `:`}${values[name].source})`)
+        (...extract(match[5]))));
+
 const insertAll = (tuples, values) => Object.assign(
     values,
     Object.fromEntries(tuples.map(([name, source]) =>
@@ -19,7 +30,7 @@ const depend = (bound, tuples) =>
         variables.length <= 0 ||
         variables.every(variable => has(bound, variable)),
         tuples));
-    
+
 module.exports = function templatedRegularExpression(definitions)
 {
     return depend(Object.create(null), Object
