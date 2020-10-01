@@ -1,4 +1,5 @@
 const partition = require("@climb/partition");
+const fromEntries = require("@climb/from-entries");
 
 const template = /\$\{(?:\<(?<captured>[^\>]+)\>|(?<uncaptured>[^\}]+))\}/g;
 const extract =
@@ -18,7 +19,7 @@ const insert = (source, values) => new RegExp(
 
 const insertAll = (tuples, values) => Object.assign(
     values,
-    Object.fromEntries(tuples.map(([name, source]) =>
+    fromEntries(tuples.map(([name, source]) =>
         [name, insert(source, values)])));
 const has = hasOwnProperty.call.bind(hasOwnProperty);
 const depend = (bound, tuples) =>
